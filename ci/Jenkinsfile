@@ -1,0 +1,18 @@
+pipeline {
+  agent any
+  stages {
+    stage('Checkout') {
+      steps { checkout scm }
+    }
+    stage('Build') {
+      steps {
+        sh 'echo Build stage - build Docker images here'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        sh 'echo Deploy stage - call Ansible or docker stack deploy'
+      }
+    }
+  }
+}

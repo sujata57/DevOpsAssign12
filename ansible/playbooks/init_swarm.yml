@@ -1,0 +1,22 @@
+- hosts: manager
+  become: yes
+  tasks:
+    - name: Initialize Docker Swarm
+      shell: docker swarm init --advertise-addr {{ ansible_host }}
+      args:
+        creates: /tmp/swarm_initialized
+      register: swarm_init
+    - name: Save join token
+      shell: docker swarm join-token -q worker
+      register: worker_token
+    - name: Write token to file
+      copy:
+        content: "{{ worker_token.stdout }}"
+        dest: /tmp/worker_token.txt
+
+- hosts: workers
+  become: yes
+  tasks:
+    - name: Wait for token on manager (manual: copy token into worker hosts inventory or use delegate)
+      debug:
+        msg: "Please run the join command using the token from the manager: docker swarm join --token <token> <MANAGER_IP>:2377"

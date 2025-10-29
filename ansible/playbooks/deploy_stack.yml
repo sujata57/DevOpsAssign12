@@ -1,0 +1,9 @@
+- hosts: manager
+  become: yes
+  tasks:
+    - name: Copy stack file
+      copy:
+        src: ../../docker/stack.yml
+        dest: /tmp/stack.yml
+    - name: Deploy stack
+      shell: docker stack deploy -c /tmp/stack.yml myapp

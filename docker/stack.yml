@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  web:
+    image: devops_assignment_web:latest
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+    ports:
+      - target: 8000
+        published: 80
+        protocol: tcp
+        mode: host
+    networks:
+      - webnet
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_NAME=postgres
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=postgrespassword
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgrespassword
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    driver: overlay
+
+volumes:
+  pgdata:
+    driver: local
