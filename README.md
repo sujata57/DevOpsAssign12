@@ -1,4 +1,4 @@
-# DevOps Assignment - Template Repository (ITA700)
+# DevOps Assignment - Template Repository (ITA724)
 
 **What this zip contains**
 - `terraform/` — Terraform HCL files (skeleton) to create 4 EC2 instances and EIPs (PLACEHOLDERS).
